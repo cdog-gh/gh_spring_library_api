@@ -25,6 +25,7 @@
 * /swagger-ui.html에 접속합니다. https가 활성화 되어 있다면 https로 접속합니다.
 
 <p align="center"><img src="img/howto8.png"></img></p>
+
 * 회원 가입을 하기 위해서, user-controller를 클릭하시고 reg를 클릭합니다.
 * 그러면, Example value 란이 있을 겁니다. Try it out 버튼을 클릭하시고, 가입할 유저의 정보를 입력합니다.
 * 가입이 완료되었다면 login을 할 수 있을 겁니다. /login을 클릭하시고, 가입한 유저의 정보를 입력한 다음에 Execute를 누릅니다.
