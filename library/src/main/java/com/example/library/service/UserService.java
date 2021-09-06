@@ -1,0 +1,23 @@
+package com.example.library.service;
+
+import com.example.library.mapper.UserMapper;
+import com.example.library.model.User;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+    @Autowired
+    private SqlSessionTemplate sqlSession;
+
+    public User getUser(User user) {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        return userMapper.selectByName(user.getUserName());
+    }
+
+    public int regUser(User user) {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        return userMapper.insert(user);
+    }
+}

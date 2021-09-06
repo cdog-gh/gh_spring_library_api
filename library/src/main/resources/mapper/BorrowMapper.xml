@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.library.mapper.BorrowMapper">
+  <resultMap id="BaseResultMap" type="com.example.library.model.Borrow">
+    <id column="borrow_id" jdbcType="BIGINT" property="borrowId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="borrow_time" jdbcType="TIMESTAMP" property="borrowTime" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from borrow
+    where borrow_id = #{borrowId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.library.model.Borrow"
+          useGeneratedKeys="true" keyProperty="borrowId">
+    insert into borrow (user_id, borrow_time, book_id)
+    select #{userId,jdbcType=BIGINT}, now(), #{bookId,jdbcType=BIGINT}
+    from book
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.library.model.Borrow">
+    update borrow
+    set user_id = #{userId,jdbcType=BIGINT},
+      borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
+      book_id = #{bookId,jdbcType=BIGINT}
+    where borrow_id = #{borrowId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select borrow_id, user_id, borrow_time, book_id
+    from borrow
+    where borrow_id = #{borrowId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select borrow_id, user_id, borrow_time, book_id
+    from borrow
+    <trim prefix="where" prefixOverrides="AND |OR ">
+      <if test="userId != null">user_id = #{userId,jdbcType=BIGINT}</if>
+    </trim>
+  </select>
+</mapper>
