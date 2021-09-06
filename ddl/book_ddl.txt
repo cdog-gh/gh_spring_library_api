@@ -1,0 +1,13 @@
+-- public.book definition
+
+-- Drop table
+
+-- DROP TABLE public.book;
+
+CREATE TABLE public.book (
+	book_id bigserial NOT NULL,
+	book_name varchar NOT NULL COLLATE "ko_KR.utf8",
+	book_class int4 NOT NULL,
+	CONSTRAINT book_pk PRIMARY KEY (book_id)
+);
+CREATE INDEX book_book_name_idx ON public.book USING btree (book_name);

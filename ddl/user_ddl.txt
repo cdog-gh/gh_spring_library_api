@@ -1,0 +1,17 @@
+-- public."user" definition
+
+-- Drop table
+
+-- DROP TABLE public."user";
+
+CREATE TABLE public."user" (
+	user_id bigserial NOT NULL,
+	user_email varchar NOT NULL,
+	user_name varchar NOT NULL,
+	user_pw varchar NOT NULL,
+	user_role_name varchar NOT NULL,
+	user_auth bool NULL,
+	CONSTRAINT user_pk PRIMARY KEY (user_id),
+	CONSTRAINT user_un UNIQUE (user_name)
+);
+CREATE INDEX user_user_name_idx ON public."user" USING btree (user_name);

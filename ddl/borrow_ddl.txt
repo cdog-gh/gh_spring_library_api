@@ -1,0 +1,16 @@
+-- public.borrow definition
+
+-- Drop table
+
+-- DROP TABLE public.borrow;
+
+CREATE TABLE public.borrow (
+	borrow_id bigserial NOT NULL,
+	user_id int8 NOT NULL,
+	borrow_time timestamptz NOT NULL,
+	book_id int8 NOT NULL,
+	CONSTRAINT borrow_pk PRIMARY KEY (borrow_id),
+	CONSTRAINT borrow_un UNIQUE (book_id)
+);
+CREATE INDEX borrow_book_id_idx ON public.borrow USING btree (book_id);
+CREATE INDEX borrow_user_id_idx ON public.borrow USING btree (user_id);
