@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    env_file:
+      - lib_api.env
+    image: postgres:12
+    restart: always
+    container_name: postgres
+    expose:
+      - "5432"
+    volumes:
+      - /mnt/postgres/data:/var/lib/postgresql/data
+      - ./ddl/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  web:
+    env_file:
+      - lib_api.env
+    command: sh ./start_library.sh
+    image: maven:3.8.2-openjdk-8
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - "7780:7780"

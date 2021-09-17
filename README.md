@@ -12,22 +12,12 @@
 - [x] 회원 가입, 로그인 API
 - [ ] 빌린 책 목록 보는 API에서 user 인가 처리
 - [ ] 회원 가입 후 메일 인증 시스템
-- [ ] packaging 해서 해당 프로젝트를 서버에 구축하기 편하게끔 배포
+- [x] packaging 해서 해당 프로젝트를 서버에 구축하기 편하게끔 컨테이너화
+- [ ] maven 관련된 파일들을 어떻게 저장할 지 생각해 보기
 
 ## Setup
-- git cmd로 아래 명령들을 순서대로 수행합니다.
-- _mvn -DskipTests package_ 명령을 수행합니다.
-- _target_ 폴더 밑에 jar 파일이 생성되었습니다.
-- postgresql에서 database mylib를 생성한 후에, DDL 폴더에 있는 DDL 문을 이용해서 table을 생성합니다.
-- 데이터 베이스에 접속하는 계정은 테이블, 시퀀스에 대해서는 아래 권한을 가져야 합니다.
+- Dockerfile이 있는 디렉토리에서 docker compose up -d 명령어를 수행합니다.
 
-## Usage
-* /swagger-ui.html에 접속합니다. https가 활성화 되어 있다면 https로 접속합니다.
+## 초기 Setting 값
+- ROLE_ADMIN 계정인 user_name은 "cho"이고, user_pw는 "chogahui"입니다.
 
-<p align="center"><img src="img/howto8.png"></img></p>
-
-* 회원 가입을 하기 위해서, user-controller를 클릭하시고 reg를 클릭합니다.
-* 그러면, Example value 란이 있을 겁니다. Try it out 버튼을 클릭하시고, 가입할 유저의 정보를 입력합니다.
-* 가입이 완료되었다면 login을 할 수 있을 겁니다. /login을 클릭하시고, 가입한 유저의 정보를 입력한 다음에 Execute를 누릅니다.
-* access_token을 얻어오면, 페이지 맨 위에 있는 authorize를 누릅니다.
-* access_token 값을 입력하고 인증을 눌러주시면 됩니다.

@@ -1,0 +1,11 @@
+.git/
+ddl/
+img/
+README.md
+library/.idea/
+library/.mvn/
+library/target/
+
+Dockerfile
+docker-compose.yml
+lib_api.env
