@@ -55,4 +55,16 @@ public class User {
     public void setUserAuth(Boolean userAuth) {
         this.userAuth = userAuth;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userEmail='" + userEmail + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPw='" + userPw + '\'' +
+                ", userRoleName='" + userRoleName + '\'' +
+                ", userAuth=" + userAuth +
+                '}';
+    }
 }

@@ -33,7 +33,6 @@ public class JwtFilter extends OncePerRequestFilter {
             //실제로 User 가 있는지 check!
             //User 가 존재하면, 이 정보를 토대로 인증 정보를 넘겨줄 거임.
             if(user != null) {
-                System.out.println(user.getUserRoleName());
                 Authentication authInfo = convUserToAuthInfo(user);
                 SecurityContextHolder.getContext().setAuthentication(authInfo);
             }
