@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class UserController {
     @Autowired
@@ -23,14 +25,7 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @RequestMapping(value="/reg", method = RequestMethod.POST)
-    public ResponseEntity<String> regUser(@RequestBody UserRegInfo regInfo){
-        if(regInfo.getUserName() == null)
-            return new ResponseEntity<>("username 값이 필요합니다.", HttpStatus.BAD_REQUEST);
-        if(regInfo.getUserPw() == null)
-            return new ResponseEntity<>("password 값이 필요합니다.", HttpStatus.BAD_REQUEST);
-        if(regInfo.getUserEmail() == null)
-            return new ResponseEntity<>("email 값이 필요합니다.", HttpStatus.BAD_REQUEST);
-
+    public ResponseEntity<String> regUser(@RequestBody @Valid UserRegInfo regInfo){
         String newPw = new BCryptPasswordEncoder().encode(regInfo.getUserPw());
 
         User user = new User();
@@ -56,13 +51,10 @@ public class UserController {
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ApiOperation(value = "로그인", notes = "로그인이 성공하면 token 을 발급한다.")
-    public ResponseEntity<JwtToken> login(@ApiParam(value = "로그인 할 유저 정보") @RequestBody UserLoginInfo loginInfo){
+    public ResponseEntity<JwtToken> login(
+            @ApiParam(value = "로그인 할 유저 정보")
+            @RequestBody @Valid UserLoginInfo loginInfo){
         JwtToken jwt = new JwtToken();
-        if(loginInfo.getUserName() == null)
-            return new ResponseEntity<>(jwt, HttpStatus.BAD_REQUEST);
-        if(loginInfo.getUserPw() == null)
-            return new ResponseEntity<>(jwt, HttpStatus.BAD_REQUEST);
-
         User user = new User();
         user.setUserName(loginInfo.getUserName());
         user.setUserPw(loginInfo.getUserPw());
