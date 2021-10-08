@@ -35,8 +35,9 @@ public class UserController {
         int retValue = userService.regUser(user);
         if(retValue < 0)
             return new ResponseEntity<>(
-                    "id " + user.getUserName() + " 가 중복됩니다. 다른 id를 사용해 주세요.",
-                    HttpStatus.FORBIDDEN
+                "id " + user.getUserName()
+                        + " 가 중복됩니다. 다른 id를 사용해 주세요.",
+                HttpStatus.CONFLICT
             );
         if(retValue == 0)
             return new ResponseEntity<>(
