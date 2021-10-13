@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.exception.usernameDuplicate;
 import com.example.library.mapper.UserMapper;
 import com.example.library.model.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,7 +23,7 @@ public class UserService {
         try{
             return userMapper.insert(user);
         }catch(DuplicateKeyException e){
-            return -1;
+            throw new usernameDuplicate("userName", user.getUserName());
         }
     }
 }

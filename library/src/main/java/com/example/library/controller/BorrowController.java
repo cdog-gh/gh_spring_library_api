@@ -1,6 +1,7 @@
 package com.example.library.controller;
 
 import com.example.library.model.Borrow;
+import com.example.library.model.BorrowInfo;
 import com.example.library.model.User;
 import com.example.library.service.BorrowService;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -56,11 +58,12 @@ public class BorrowController {
         }
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Borrow> addBorrow(@ApiParam(value = "borrow 정보") @RequestBody Borrow borrow){
-        if(borrow.getUserId() == null)
-            return new ResponseEntity<>(borrow, HttpStatus.BAD_REQUEST);
-        if(borrow.getBookId() == null)
-            return new ResponseEntity<>(borrow, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Borrow> addBorrow(
+            @ApiParam(value = "borrow 정보")
+            @RequestBody @Valid BorrowInfo borrowInfo){
+        Borrow borrow = new Borrow();
+        borrow.setBookId(borrowInfo.getBookId());
+        borrow.setUserId(borrowInfo.getUserId());
         borrowservice.addBorrow(borrow);
         return new ResponseEntity<>(borrow, HttpStatus.OK);
     }
