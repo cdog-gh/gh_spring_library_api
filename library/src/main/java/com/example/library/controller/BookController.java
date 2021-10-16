@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
 import java.util.*;
 
 @RestController
+@Validated
 public class BookController {
     @Autowired
     private BookService bookservice;
@@ -91,16 +93,12 @@ public class BookController {
         }
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> delBook(
+    public ResponseEntity delBook(
             @ApiParam(value = "제거할 책 id")
-            @PathVariable("bookId") @NotNull Long bookId){
-        int delCount = bookservice.delBook(bookId);
-        if(delCount > 0)
-            return new ResponseEntity<>(
-                "id가 " + bookId + "인 책을 제거하였습니다.", HttpStatus.OK
-            );
-        return new ResponseEntity<>(
-            "id가 " + bookId + "인 책은 빌려간 책이거나, 도서관에 없습니다.", HttpStatus.NOT_FOUND
-        );
+            @PathVariable("bookId") @Min(1) Long bookId){
+        bookservice.delBook(bookId);
+        HashMap <String, String> response = new HashMap<>();
+        response.put("message", "bookId가 " + bookId + "인 책을 제거하였습니다.");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

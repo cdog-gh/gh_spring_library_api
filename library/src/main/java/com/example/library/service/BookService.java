@@ -1,4 +1,5 @@
 package com.example.library.service;
+import com.example.library.exception.bookNotAvailable;
 import com.example.library.mapper.BookMapper;
 import com.example.library.model.Book;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,6 +28,9 @@ public class BookService {
 
     public int delBook(Long bookId) {
         BookMapper bookMapper = sqlSession.getMapper(BookMapper.class);
+        int deletedRows = bookMapper.deleteByPrimaryKey(bookId);
+        if(deletedRows == 0)
+            throw new bookNotAvailable(bookId);
         return bookMapper.deleteByPrimaryKey(bookId);
     }
 }

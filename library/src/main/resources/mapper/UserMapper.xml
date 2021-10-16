@@ -13,7 +13,8 @@
     delete from user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.example.library.model.User">
+  <insert id="insert" parameterType="com.example.library.model.User"
+          useGeneratedKeys="true" keyProperty="userId">
     insert into public.user (user_email, user_name,
     user_pw, user_role_name, user_auth
     )

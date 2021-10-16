@@ -25,18 +25,15 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @RequestMapping(value="/reg", method = RequestMethod.POST)
-    public ResponseEntity<String> regUser(@RequestBody @Valid UserRegInfo regInfo){
+    public ResponseEntity<UserRegInfo> regUser(@RequestBody @Valid UserRegInfo regInfo){
         String newPw = new BCryptPasswordEncoder().encode(regInfo.getUserPw());
 
         User user = new User();
         user.setUserName(regInfo.getUserName());
         user.setUserEmail(regInfo.getUserEmail());
         user.setUserPw(newPw);
-        int retValue = userService.regUser(user);
-        return new ResponseEntity<>(
-                "user " + user.getUserName() + " 추가 성공",
-                HttpStatus.OK
-        );
+        userService.regUser(user);
+        return new ResponseEntity<>(regInfo, HttpStatus.OK);
     }
 
     @RequestMapping(value="/login", method = RequestMethod.POST)

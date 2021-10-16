@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.exception.borrowNotAvailable;
 import com.example.library.mapper.BorrowMapper;
 import com.example.library.model.Borrow;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,6 +27,9 @@ public class BorrowService {
 
     public int delBorrow(Long borrowId) {
         BorrowMapper borrowMapper = sqlSession.getMapper(BorrowMapper.class);
-        return borrowMapper.deleteByPrimaryKey(borrowId);
+        int deletedRows = borrowMapper.deleteByPrimaryKey(borrowId);
+        if(deletedRows == 0)
+            throw new borrowNotAvailable(borrowId);
+        return deletedRows;
     }
 }

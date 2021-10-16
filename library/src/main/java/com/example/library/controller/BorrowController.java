@@ -13,40 +13,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @RestController
+@Validated
 public class BorrowController {
     @Autowired
     private BorrowService borrowservice;
 
-    @RequestMapping(value = "/borrow/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/borrow", method = RequestMethod.GET)
     @ApiOperation(
-        value = "빌린 책 조회", notes = "View the books that user borrow",
+        value = "인증이 된 상태에서 빌린 책 조회", notes = "View the books that user borrow",
         authorizations = {
             @Authorization(value="jwt_access_token")
         }
     )
-    public ResponseEntity<List<Borrow>> viewBorrow(@ApiParam(value = "유저 id") @PathVariable("userId")Long userId){
+    public ResponseEntity<List<Borrow>> viewBorrow(){
         Authentication authInfo = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authInfo.getPrincipal();
         List<Borrow> emptyList = new ArrayList<>();
         if(principal instanceof User){
             User user = (User)principal;
-
-            //admin 인 경우
-            if(user.getUserRoleName().compareTo("ROLE_ADMIN") == 0)
-                return new ResponseEntity<>(borrowservice.viewBorrow(userId), HttpStatus.OK);
-
-            //admin 이 아닌 경우 여기로 넘어온다.
-            if(user.getUserId().longValue() == userId.longValue())
-                return new ResponseEntity<>(borrowservice.viewBorrow(userId), HttpStatus.OK);
+            Long userId = user.getUserId();
+            return new ResponseEntity<>(borrowservice.viewBorrow(userId), HttpStatus.OK);
         }
-
-        //user 가 다른 사람의 borrow 목록을 보는 요청은 거부한다.
         return new ResponseEntity<>(emptyList, HttpStatus.FORBIDDEN);
     }
 
@@ -76,12 +72,12 @@ public class BorrowController {
         }
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> delBorrow(@ApiParam(value = "제거할 주문 id") @PathVariable("borrowId")Long borrowId){
-        if(borrowId == null)
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-        int delCount = borrowservice.delBorrow(borrowId);
-        if(delCount > 0)
-            return new ResponseEntity<>("", HttpStatus.OK);
-        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+    public ResponseEntity delBorrow(
+            @ApiParam(value = "제거할 주문 id")
+            @PathVariable("borrowId") @Min(1) Long borrowId){
+        borrowservice.delBorrow(borrowId);
+        HashMap <String, String> response = new HashMap<>();
+        response.put("message", "borrowId가 " + borrowId + "인 주문을 제거하였습니다.");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
