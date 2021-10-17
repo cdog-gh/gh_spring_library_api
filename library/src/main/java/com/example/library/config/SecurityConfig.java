@@ -1,5 +1,6 @@
 package com.example.library.config;
 
+import com.example.library.filter.JwtExceptionFilter;
 import com.example.library.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtFilter jwtFilter;
+
+    @Autowired
+    private JwtExceptionFilter jwtExceptionFilter;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -52,12 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/login/**").permitAll()
             .antMatchers("/reg/**").permitAll()
             .and()
-            .addFilterBefore(jwtFilter ,UsernamePasswordAuthenticationFilter.class);
-
-            /*
-            (1) filter 태우는 logic 추가. -> 완료
-            (2) filter 를 모두 태우면 controller 단에서
-            인증 정보를 받아오는 것 추가.
-            */
+            .addFilterBefore(jwtFilter ,UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtExceptionFilter, JwtFilter.class);
+        /*
+        jwtExceptionFilter -> jwtFilter -> UsernamePasswordAuthenticationFilter
+         */
     }
 }

@@ -1,10 +1,9 @@
 package com.example.library.util;
 
+import com.example.library.exception.jwtTokenNotAvailable;
 import com.example.library.model.User;
 import com.example.library.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class JwtUtil {
 
     /*
     (1) JWT token 이 valid 한지 확인
-    (2) token 에 저장되어 있는 User 정보가 실제로 db에 있는지 확인.
+    (2) token 에 저장되어 있는 User 정보가 실제로 db에 있는지 확인
      */
     public User getUserToJwtToken(String jwtToken){
         Claims body = getTokenBody(jwtToken);
@@ -75,11 +74,27 @@ public class JwtUtil {
     }
 
     private Claims getTokenBody(String jwtToken) {
-        return Jwts
-            .parser()
-            .setSigningKey(securityKey)
-            .parseClaimsJws(jwtToken) //jwt with sign
-            .getBody();
+        try {
+            return Jwts
+                    .parser()
+                    .setSigningKey(securityKey)
+                    .parseClaimsJws(jwtToken) //jwt with sign
+                    .getBody();
+        }
+        catch(ExpiredJwtException e){
+            throw new jwtTokenNotAvailable("인증 Token 사용 기한이 경과되었습니다.");
+        }
+        catch(UnsupportedJwtException e){
+            throw new jwtTokenNotAvailable("지원되지 않는 Token 형식 입니다.");
+        }
+        catch(MalformedJwtException e){
+            throw new jwtTokenNotAvailable("인증 Token 이 올바르게 구성되지 않았습니다.");
+        }
+        catch(SignatureException e){
+            throw new jwtTokenNotAvailable("인증 Token signature 가 올바르지 않습니다.");
+        }
+        catch(IllegalArgumentException e){
+            throw new jwtTokenNotAvailable("인증 Token 을 다시 한 번 확인해 주세요.");
+        }
     }
-
 }

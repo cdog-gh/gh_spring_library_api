@@ -2,6 +2,7 @@ package com.example.library.controller;
 
 import com.example.library.exception.bookNotAvailable;
 import com.example.library.exception.borrowNotAvailable;
+import com.example.library.exception.jwtTokenNotAvailable;
 import com.example.library.exception.usernameDuplicate;
 import com.example.library.model.ErrorObject;
 import org.springframework.http.HttpStatus;
