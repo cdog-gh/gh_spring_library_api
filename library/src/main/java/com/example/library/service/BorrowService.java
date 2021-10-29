@@ -2,7 +2,7 @@ package com.example.library.service;
 
 import com.example.library.exception.borrowNotAvailable;
 import com.example.library.mapper.BorrowMapper;
-import com.example.library.model.Borrow;
+import com.example.library.model.Borrow.Borrow;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

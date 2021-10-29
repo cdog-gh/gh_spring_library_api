@@ -1,6 +1,6 @@
 package com.example.library.mapper;
 
-import com.example.library.model.Book;
+import com.example.library.model.Book.Book;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

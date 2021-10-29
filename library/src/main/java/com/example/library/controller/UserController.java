@@ -1,9 +1,9 @@
 package com.example.library.controller;
 
 import com.example.library.model.JwtToken;
-import com.example.library.model.User;
-import com.example.library.model.UserLoginInfo;
-import com.example.library.model.UserRegInfo;
+import com.example.library.model.User.User;
+import com.example.library.model.User.UserLoginInfo;
+import com.example.library.model.User.UserRegInfo;
 import com.example.library.service.UserService;
 import com.example.library.util.JwtUtil;
 import io.swagger.annotations.ApiOperation;

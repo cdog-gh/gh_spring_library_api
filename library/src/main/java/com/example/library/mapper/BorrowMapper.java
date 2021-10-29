@@ -1,6 +1,6 @@
 package com.example.library.mapper;
 
-import com.example.library.model.Borrow;
+import com.example.library.model.Borrow.Borrow;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

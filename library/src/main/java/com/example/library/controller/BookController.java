@@ -1,7 +1,7 @@
 package com.example.library.controller;
-import com.example.library.model.Book;
-import com.example.library.model.BookRegInfo;
-import com.example.library.model.BookRegInfoList;
+import com.example.library.model.Book.Book;
+import com.example.library.model.Book.BookRegInfo;
+import com.example.library.model.Book.BookRegInfoList;
 import com.example.library.service.BookService;
 
 import io.swagger.annotations.*;

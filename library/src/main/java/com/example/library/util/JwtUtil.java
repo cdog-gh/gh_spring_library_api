@@ -1,7 +1,7 @@
 package com.example.library.util;
 
 import com.example.library.exception.jwtTokenNotAvailable;
-import com.example.library.model.User;
+import com.example.library.model.User.User;
 import com.example.library.service.UserService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.example.library.service;
 
 import com.example.library.exception.usernameDuplicate;
 import com.example.library.mapper.UserMapper;
-import com.example.library.model.User;
+import com.example.library.model.User.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;

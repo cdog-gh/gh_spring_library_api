@@ -1,6 +1,6 @@
 package com.example.library.mapper;
 
-import com.example.library.model.User;
+import com.example.library.model.User.User;
 import java.util.List;
 
 public interface UserMapper {

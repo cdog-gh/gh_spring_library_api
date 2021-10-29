@@ -1,4 +1,4 @@
-package com.example.library.model;
+package com.example.library.model.User;
 
 public class User {
     private Long userId;

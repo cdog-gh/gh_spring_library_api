@@ -1,4 +1,4 @@
-package com.example.library.model;
+package com.example.library.model.Book;
 
 public class Book {
     private Long bookId;

@@ -1,4 +1,4 @@
-package com.example.library.model;
+package com.example.library.model.Book;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

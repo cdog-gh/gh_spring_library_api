@@ -1,8 +1,8 @@
 package com.example.library.controller;
 
-import com.example.library.model.Borrow;
-import com.example.library.model.BorrowInfo;
-import com.example.library.model.User;
+import com.example.library.model.Borrow.Borrow;
+import com.example.library.model.Borrow.BorrowInfo;
+import com.example.library.model.User.User;
 import com.example.library.service.BorrowService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @RestController
