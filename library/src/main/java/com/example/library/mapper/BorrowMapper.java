@@ -2,8 +2,7 @@ package com.example.library.mapper;
 
 import com.example.library.model.Borrow.Borrow;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import java.util.*;
 
 public interface BorrowMapper {
     int deleteByPrimaryKey(Long borrowId);

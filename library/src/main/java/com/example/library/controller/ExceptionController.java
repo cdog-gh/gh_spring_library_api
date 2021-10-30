@@ -2,7 +2,7 @@ package com.example.library.controller;
 
 import com.example.library.exception.bookNotAvailable;
 import com.example.library.exception.borrowNotAvailable;
-import com.example.library.exception.jwtTokenNotAvailable;
+import com.example.library.exception.returnBookNotAvailable;
 import com.example.library.exception.usernameDuplicate;
 import com.example.library.model.ErrorObject;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class ExceptionController {
                 .body(new ErrorObject("bookId", e.getMessage()));
     }
 
-    @ExceptionHandler({borrowNotAvailable.class})
+    @ExceptionHandler({returnBookNotAvailable.class})
     public ResponseEntity borrowNotAvailableHandler(borrowNotAvailable e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorObject("borrowId", e.getMessage()));

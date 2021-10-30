@@ -16,7 +16,11 @@
     insert into borrow (user_id, borrow_time, book_id)
     select #{userId,jdbcType=BIGINT}, now(), #{bookId,jdbcType=BIGINT}
     from book
-    where book_id = #{bookId,jdbcType=BIGINT}
+    where book_id = #{bookId,jdbcType=BIGINT} and exists(
+      select user_id
+      from public.user
+      where user_id = #{userId,jdbcType=BIGINT}
+    )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.example.library.model.Borrow.Borrow">
     update borrow

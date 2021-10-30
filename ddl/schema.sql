@@ -36,14 +36,15 @@ CREATE INDEX borrow_user_id_idx ON public.borrow USING btree (user_id);
 -- DROP TABLE public."user";
 
 CREATE TABLE public."user" (
-    user_id bigserial NOT NULL,
-    user_email varchar NOT NULL,
-    user_name varchar NOT NULL,
-    user_pw varchar NOT NULL,
-    user_role_name varchar NOT NULL,
-    user_auth bool NULL,
-    CONSTRAINT user_pk PRIMARY KEY (user_id),
-    CONSTRAINT user_un UNIQUE (user_name)
+	user_id bigserial NOT NULL,
+	user_email varchar NOT NULL,
+	user_name varchar NOT NULL,
+	user_pw varchar NOT NULL,
+	user_role_name varchar NOT NULL,
+	user_auth bool NULL,
+	user_rm_flag bool NULL DEFAULT false,
+	CONSTRAINT user_pk PRIMARY KEY (user_id),
+	CONSTRAINT user_un UNIQUE (user_name)
 );
 CREATE INDEX user_user_name_idx ON public."user" USING btree (user_name);
 
