@@ -2,7 +2,7 @@ package com.example.library.service;
 
 import com.example.library.exception.bookNotAvailable;
 import com.example.library.exception.returnBookNotAvailable;
-import com.example.library.mapper.BorrowMapper;
+import com.example.library.mapper.db.BorrowMapper;
 import com.example.library.model.Borrow.Borrow;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

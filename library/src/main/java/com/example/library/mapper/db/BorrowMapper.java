@@ -1,4 +1,4 @@
-package com.example.library.mapper;
+package com.example.library.mapper.db;
 
 import com.example.library.model.Borrow.Borrow;
 import org.apache.ibatis.annotations.Param;

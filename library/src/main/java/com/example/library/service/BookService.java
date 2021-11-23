@@ -1,6 +1,6 @@
 package com.example.library.service;
 import com.example.library.exception.bookNotAvailable;
-import com.example.library.mapper.BookMapper;
+import com.example.library.mapper.db.BookMapper;
 import com.example.library.model.Book.Book;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
