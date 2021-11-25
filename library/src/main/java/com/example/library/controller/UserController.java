@@ -1,5 +1,6 @@
 package com.example.library.controller;
 
+import com.example.library.mapper.convertor.ConvUserModel;
 import com.example.library.model.JwtToken;
 import com.example.library.model.User.User;
 import com.example.library.model.User.UserLoginInfo;
@@ -26,12 +27,7 @@ public class UserController {
 
     @RequestMapping(value="/reg", method = RequestMethod.POST)
     public ResponseEntity<UserRegInfo> regUser(@RequestBody @Valid UserRegInfo regInfo){
-        String newPw = new BCryptPasswordEncoder().encode(regInfo.getUserPw());
-
-        User user = new User();
-        user.setUserName(regInfo.getUserName());
-        user.setUserEmail(regInfo.getUserEmail());
-        user.setUserPw(newPw);
+        User user = ConvUserModel.instance.UserRegInfoToUser(regInfo);
         userService.regUser(user);
         return new ResponseEntity<>(regInfo, HttpStatus.OK);
     }
@@ -42,16 +38,11 @@ public class UserController {
             @ApiParam(value = "로그인 할 유저 정보")
             @RequestBody @Valid UserLoginInfo loginInfo){
         JwtToken jwt = new JwtToken();
-        User user = new User();
-        user.setUserName(loginInfo.getUserName());
-        user.setUserPw(loginInfo.getUserPw());
-
+        User user = ConvUserModel.instance.UserLoginInfoToUser(loginInfo);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User result = userService.getUser(user);
-
         if((result == null) || (!encoder.matches(user.getUserPw(), result.getUserPw())))
             return new ResponseEntity<>(jwt, HttpStatus.UNAUTHORIZED);
-
         user.setUserPw("");
         jwt.setAccessToken(jwtUtil.generateJwtToken(result));
         return new ResponseEntity<>(jwt, HttpStatus.OK);
