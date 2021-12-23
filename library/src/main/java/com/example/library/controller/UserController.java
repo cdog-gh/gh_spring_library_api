@@ -26,7 +26,10 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @RequestMapping(value="/reg", method = RequestMethod.POST)
-    public ResponseEntity<UserRegInfo> regUser(@RequestBody @Valid UserRegInfo regInfo){
+    public ResponseEntity<UserRegInfo> regUser(
+            @RequestBody
+            @ApiParam(value = "새로 가입할 유저 정보", required = true)
+            @Valid UserRegInfo regInfo){
         User user = ConvUserModel.instance.UserRegInfoToUser(regInfo);
         userService.regUser(user);
         return new ResponseEntity<>(regInfo, HttpStatus.OK);
@@ -35,7 +38,7 @@ public class UserController {
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ApiOperation(value = "로그인", notes = "로그인이 성공하면 token 을 발급한다.")
     public ResponseEntity<JwtToken> login(
-            @ApiParam(value = "로그인 할 유저 정보")
+            @ApiParam(value = "로그인 할 유저 정보", required = true)
             @RequestBody @Valid UserLoginInfo loginInfo){
         JwtToken jwt = new JwtToken();
         User user = ConvUserModel.instance.UserLoginInfoToUser(loginInfo);

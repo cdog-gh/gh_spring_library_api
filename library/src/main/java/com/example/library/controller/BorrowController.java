@@ -55,7 +55,7 @@ public class BorrowController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Borrow> addBorrow(
-            @ApiParam(value = "borrow 정보")
+            @ApiParam(value = "borrow 정보", required = true)
             @RequestBody @Valid BorrowInfo borrowInfo){
         Borrow borrow = ConvBorrowModel.instance.BorrowInfoToBorrow(borrowInfo);
         borrowservice.addBorrow(borrow);
@@ -71,7 +71,7 @@ public class BorrowController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity delBorrow(
-            @ApiParam(value = "제거할 주문 id")
+            @ApiParam(value = "제거할 주문 id", example = "1", required = true)
             @PathVariable("borrowId") @Min(1) Long borrowId){
         borrowservice.delBorrow(borrowId);
         HashMap <String, String> response = new HashMap<>();

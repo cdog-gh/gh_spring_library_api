@@ -31,9 +31,9 @@ public class BookController {
         }
     )
     public ResponseEntity<List<Book>> viewBook(
-        @ApiParam(value = "책 분류 번호")
+        @ApiParam(value = "책 분류 번호", example = "5")
         @RequestParam(required = false) Integer bookClass,
-        @ApiParam(value = "책 이름")
+        @ApiParam(value = "책 이름", example = "C programming")
         @RequestParam(required = false) String bookName,
         @ApiParam(value = "빌려간 책인지에 대한 여부")
         @RequestParam(required = false) Boolean borrowFlag
@@ -53,7 +53,7 @@ public class BookController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Book> addBook(
-            @ApiParam(value = "추가할 책 정보")
+            @ApiParam(value = "추가할 책 정보", required = true)
             @RequestBody @Valid BookRegInfo bookRegInfo){
         Book book = ConvBookModel.instance.BookRegInfoToBook(bookRegInfo);
         bookservice.addBook(book);
@@ -69,7 +69,7 @@ public class BookController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Book>> addBooks(
-            @ApiParam(value = "추가할 책 정보들")
+            @ApiParam(value = "추가할 책 정보들", required = true)
             @RequestBody @Valid BookRegInfoList bookRegInfoList){
         List<Book> books = ConvBookModel.instance.BookRegInfoListToBookList(bookRegInfoList.getRegInfoList());
         bookservice.addBooks(books);
@@ -85,7 +85,7 @@ public class BookController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity delBook(
-            @ApiParam(value = "제거할 책 id")
+            @ApiParam(value = "제거할 책 id", example = "1", required = true)
             @PathVariable("bookId") @Min(1) Long bookId){
         bookservice.delBook(bookId);
         HashMap <String, String> response = new HashMap<>();

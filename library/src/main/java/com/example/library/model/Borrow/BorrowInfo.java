@@ -8,12 +8,12 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel(description = "borrow 요청 모델")
 public class BorrowInfo {
-    @ApiModelProperty(value = "요청을 한 user 의 id")
+    @ApiModelProperty(value = "요청을 한 user 의 id", required = true)
     @NotNull
     @Min(1)
     private Long userId;
 
-    @ApiModelProperty(value = "빌린 책 id")
+    @ApiModelProperty(value = "빌린 책 id", required = true)
     @NotNull
     @Min(1)
     private Long bookId;
