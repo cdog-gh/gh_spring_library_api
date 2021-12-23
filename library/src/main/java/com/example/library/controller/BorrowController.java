@@ -1,5 +1,6 @@
 package com.example.library.controller;
 
+import com.example.library.mapper.convertor.ConvBorrowModel;
 import com.example.library.model.Borrow.Borrow;
 import com.example.library.model.Borrow.BorrowInfo;
 import com.example.library.model.User.User;
@@ -56,9 +57,7 @@ public class BorrowController {
     public ResponseEntity<Borrow> addBorrow(
             @ApiParam(value = "borrow 정보")
             @RequestBody @Valid BorrowInfo borrowInfo){
-        Borrow borrow = new Borrow();
-        borrow.setBookId(borrowInfo.getBookId());
-        borrow.setUserId(borrowInfo.getUserId());
+        Borrow borrow = ConvBorrowModel.instance.BorrowInfoToBorrow(borrowInfo);
         borrowservice.addBorrow(borrow);
         return new ResponseEntity<>(borrow, HttpStatus.OK);
     }

@@ -1,4 +1,5 @@
 package com.example.library.controller;
+import com.example.library.mapper.convertor.ConvBookModel;
 import com.example.library.model.Book.Book;
 import com.example.library.model.Book.BookRegInfo;
 import com.example.library.model.Book.BookRegInfoList;
@@ -54,9 +55,7 @@ public class BookController {
     public ResponseEntity<Book> addBook(
             @ApiParam(value = "추가할 책 정보")
             @RequestBody @Valid BookRegInfo bookRegInfo){
-        Book book = new Book();
-        book.setBookName(bookRegInfo.getBookName());
-        book.setBookClass(bookRegInfo.getBookClass());
+        Book book = ConvBookModel.instance.BookRegInfoToBook(bookRegInfo);
         bookservice.addBook(book);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
@@ -71,16 +70,8 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Book>> addBooks(
             @ApiParam(value = "추가할 책 정보들")
-            @RequestBody @Valid BookRegInfoList bookInfoList){
-        List<Book> books = new ArrayList<>();
-
-        for(BookRegInfo info: bookInfoList.getRegInfoList()){
-            Book record = new Book();
-            record.setBookClass(info.getBookClass());
-            record.setBookName(info.getBookName());
-            books.add(record);
-        }
-
+            @RequestBody @Valid BookRegInfoList bookRegInfoList){
+        List<Book> books = ConvBookModel.instance.BookRegInfoListToBookList(bookRegInfoList.getRegInfoList());
         bookservice.addBooks(books);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
