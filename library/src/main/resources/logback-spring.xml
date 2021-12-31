@@ -4,7 +4,7 @@
     <appender name = "console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <pattern>%d{HH:mm:ss.SSS} %-4relative %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%X{X-Forwarded-For} %d{HH:mm:ss.SSS} %-4relative %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -18,7 +18,7 @@
             <maxFileSize>5MB</maxFileSize>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-4relative %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%X{X-Forwarded-For} %d{HH:mm:ss.SSS} %-4relative %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
